@@ -33,7 +33,8 @@ def submit_login(request):
 def lista_eventos(request):
     usuario = request.user
     data_atual = datetime.now() - timedelta(hours=1)
-    evento = Evento.objects.filter(usuario=usuario, data_evento__gt=data_atual)
+    data_futura = datetime.now() + timedelta(hours=1)
+    evento = Evento.objects.filter(usuario=usuario, data_evento__gt=data_atual, data_evento__lt=data_futura)
     dados = {'eventos':evento}
 
     return render(request, 'agenda.html', dados)
